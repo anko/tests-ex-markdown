@@ -11,7 +11,7 @@ txm-expect = (name, md-string, expected={}) ->
       return spawn-sync do
         "lsc"
         <[ index.ls -- --format=tap ]>
-        input : md-string, stdio: [ null, null, null ]
+        input : md-string
     catch e
       throw e
 
