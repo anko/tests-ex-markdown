@@ -1,5 +1,5 @@
 #!/usr/bin/env lsc
-{ exec-sync } = require \child_process
+{ spawn-sync } = require \child_process
 test = require \tape
 
 txm-expect = (name, md-string, expected={}) ->
@@ -8,19 +8,16 @@ txm-expect = (name, md-string, expected={}) ->
     try
       # If everything goes as planned, return just an object with the stdout
       # property.
-      return {
-        stdout : exec-sync "lsc index.ls -- --format=tap" {
-          input : md-string
-          stdio: [ null, null, null ]
-        }
-      }
+      return spawn-sync do
+        "lsc"
+        <[ index.ls -- --format=tap ]>
+        input : md-string, stdio: [ null, null, null ]
     catch e
-      # If something fails, return the error object, which contains `status`
-      # and `stderr` properties also.
-      return e
+      throw e
 
   test name, (t) ->
     { stdout, status, stderr } = txm md-string
+
     if not status? then status := 0
     if not stderr? then stderr := ''
 
