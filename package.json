@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "lsc --compile --bare --print index.ls | sed '1s:^:#!/usr/bin/env node\\n:' > index.js",
-    "test": "lsc index.ls readme.markdown && lsc test.ls"
+    "test": "lsc index.ls readme.markdown ; lsc -cp test.ls > test.js ; node test.js"
   },
   "bin": {
     "txm": "index.js"
